@@ -77,7 +77,7 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: CmdLine@2
       inputs:
-        script: 'newman run automatedtesting\postman\StarterAPIs.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
+        script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: PublishTestResults@2
       inputs:

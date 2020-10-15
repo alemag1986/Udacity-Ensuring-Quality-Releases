@@ -2,7 +2,7 @@
 # Resource Group/Location
 location = "East US 2"
 resource_group = "Test"
-application_type = "EQRApp"
+application_type = "EQR"
 
 # Network
 virtual_network_name = "VNET-EQR"

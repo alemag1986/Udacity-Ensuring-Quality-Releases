@@ -88,4 +88,4 @@ stages:
       condition: always()
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/PostmanTests.xml'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)\QA\Results\PostmanTests.xml'

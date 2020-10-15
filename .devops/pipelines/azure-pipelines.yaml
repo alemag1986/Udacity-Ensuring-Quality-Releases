@@ -68,9 +68,12 @@ stages:
   - job: PostmanTests
     displayName: PostmanTests
     steps: 
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '12.x'
     - task: CmdLine@2
       inputs:
-        script: 'npm install -g newman'
+        script: 'npm install newman'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: CmdLine@2
       inputs:

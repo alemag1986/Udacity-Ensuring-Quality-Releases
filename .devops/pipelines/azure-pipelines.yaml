@@ -20,6 +20,7 @@ stages:
         backendAzureRmStorageAccountName: 'sageneralsupport'
         backendAzureRmContainerName: 'terraform-state'
         backendAzureRmKey: 'ensuring-quality-releases.tfstate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     - task: TerraformTaskV1@0
       inputs:
         provider: 'azurerm'

@@ -6,11 +6,11 @@
 - azure-pipelines.yaml
 - screenshot of the successful execution of the pipeline (build results page => `/_build/results?buildId={id}&view=results`)
 
-- two Postman collections and environment
+- The Data Validation and Regression Postman collections and environment
 - Three screenshots of the Test Run Results from Postman shown in Azure DevOps
-  - One should be the Run Summary page (which contains 4 graphs)
-  - one should be of the Test Results page (test case titles from each test)
-  - one should be of the output of the Publish Test Results step.
+  - One should be the Run Summary page (which contains 4 graphs)                         => CHECK
+  - one should be of the Test Results page (test case titles from each test)             => CHECK
+  - one should be of the output of the Publish Test Results step.                        => CHECK
 
 - Selenium python files
 - screenshot of the successful execution of the Test Suite on a VM in Azure DevOps

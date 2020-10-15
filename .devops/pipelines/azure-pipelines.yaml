@@ -83,9 +83,13 @@ stages:
       inputs:
         script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Results\PostmanTests.xml'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
+    - task: CmdLine@2
+      inputs:
+        script: 'ls'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: PublishTestResults@2
       displayName: Publish Test Reports
       condition: always()
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)\QA\Results\PostmanTests.xml'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)/QA/Results/PostmanTests.xml'

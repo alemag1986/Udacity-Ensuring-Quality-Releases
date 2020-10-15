@@ -8,6 +8,10 @@ Udacity final project Ensuring Quality Releases.
 
 ## Dependencies/Pre-Requisites
 
+- service connection
+- storage account for terraform and sp
+- terraform market place install
+
 ## Steps to Run
 
 0. Clone the repository and go inside the new folder

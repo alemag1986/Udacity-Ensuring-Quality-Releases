@@ -14,8 +14,18 @@ stages:
     - task: TerraformTaskV1@0
       inputs:
         provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'EnsuringQualityReleasesSC'
+        backendAzureRmResourceGroupName: 'RG-SUPPORT'
+        backendAzureRmStorageAccountName: 'sageneralsupport'
+        backendAzureRmContainerName: 'terraform-state'
+        backendAzureRmKey: 'ensuring-quality-releases.tfstate'
+    - task: TerraformTaskV1@0
+      inputs:
+        provider: 'azurerm'
         command: 'validate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+      
 # - stage: Build
 #   jobs:
 #   - job: Build

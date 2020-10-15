@@ -81,7 +81,7 @@ stages:
     - task: CmdLine@2
       displayName: Run Tests
       inputs:
-        script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Results\PostmanTests.xml'
+        script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Results/PostmanTests.xml'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: CmdLine@2
       inputs:
@@ -92,4 +92,4 @@ stages:
       condition: always()
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/QA/Results/PostmanTests.xml'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/PostmanTests.xml'

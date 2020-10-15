@@ -2,6 +2,20 @@ name: Azure Pipelines
 variables:
   python.version: '3.7.6'
 stages:
+- stage: Provisioning
+  displayName: Provisioning
+  jobs: 
+  - job: Provisioning AppService
+    displayName: Provisioning AppService
+    steps:
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: '0.13.4'
+    - task: TerraformTaskV1@0
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 # - stage: Build
 #   jobs:
 #   - job: Build

@@ -69,18 +69,22 @@ stages:
     displayName: PostmanTests
     steps: 
     - task: NodeTool@0
+      displayName: Install Node v12.X
       inputs:
         versionSpec: '12.x'
     - task: CmdLine@2
+      displayName: Install Newman
       inputs:
         script: 'npm install newman'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: CmdLine@2
+      displayName: Run Tests
       inputs:
-        script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Reports\PostmanTests.xml'
+        script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Reports/PostmanTests.xml'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: PublishTestResults@2
+      displayName: Publish Test Reports
       condition: always()
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: 'Results\PostmanTests.xml'
+        testResultsFiles: 'Results/PostmanTests.xml'

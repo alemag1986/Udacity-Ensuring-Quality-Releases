@@ -64,6 +64,7 @@ stages:
   #               pip3 install selenium
   #               export PATH=$PATH:some/path
 - stage: IntegrationTests
+  displayName: Integration Tests
   jobs:
   - job: PostmanTests
     displayName: PostmanTests

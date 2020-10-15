@@ -1,7 +1,7 @@
 
 # Resource Group/Location
 location = "East US 2"
-resource_group = "Test"
+resource_group = "RG-TEST"
 application_type = "EQR"
 
 # Network

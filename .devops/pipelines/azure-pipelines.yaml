@@ -5,7 +5,7 @@ stages:
 - stage: Provisioning
   displayName: Provisioning
   jobs: 
-  - job: Provisioning AppService
+  - job: ProvisioningAppService
     displayName: Provisioning AppService
     steps:
     - task: TerraformInstaller@0

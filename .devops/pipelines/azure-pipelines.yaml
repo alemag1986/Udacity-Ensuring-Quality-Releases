@@ -29,18 +29,18 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'plan'
-        backendServiceArm: 'EnsuringQualityReleasesSC'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
         backendAzureRmResourceGroupName: 'RG-SUPPORT'
         backendAzureRmStorageAccountName: 'sageneralsupport'
         backendAzureRmContainerName: 'terraform-state'
         backendAzureRmKey: 'ensuring-quality-releases.tfstate'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
     - task: TerraformTaskV1@0
       displayName: Terraform Validate and Apply  
       inputs:
         provider: 'azurerm'
         command: 'apply'
-        backendServiceArm: 'EnsuringQualityReleasesSC'
+        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
         backendAzureRmResourceGroupName: 'RG-SUPPORT'
         backendAzureRmStorageAccountName: 'sageneralsupport'
         backendAzureRmContainerName: 'terraform-state'

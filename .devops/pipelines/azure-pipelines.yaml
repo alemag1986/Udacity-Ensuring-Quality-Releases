@@ -50,6 +50,7 @@ stages:
       inputs:
         provider: 'azurerm'
         command: 'apply'
+        commandOptions: '-lock=false'
         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
         backendAzureRmResourceGroupName: 'RG-SUPPORT'
         backendAzureRmStorageAccountName: 'sageneralsupport'

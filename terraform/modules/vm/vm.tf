@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "test" {
-  name                = "${var.resource_type}-${var.application_type}"
+  name                = "$NIC-${var.application_type}"
   location            = var.location
   resource_group_name = var.resource_group
 
@@ -12,10 +12,10 @@ resource "azurerm_network_interface" "test" {
 }
 
 resource "azurerm_linux_virtual_machine" "test" {
-  name                  = "VM-${var.application_type}"
+  name                  = "${var.resource_type}-${var.application_type}"
   location              = var.location
   resource_group_name   = var.resource_group
-  size                  = "Standard_B1"
+  size                  = "Basic_A1"
   admin_username        = var.admin_username
 
   network_interface_ids = [

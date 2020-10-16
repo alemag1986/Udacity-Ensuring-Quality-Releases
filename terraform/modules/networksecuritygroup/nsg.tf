@@ -1,5 +1,5 @@
 resource "azurerm_network_security_group" "nsg" {
-  name                = "${var.application_type}-${var.resource_type}"
+  name                = "${var.resource_type}-${var.application_type}"
   location            = "${var.location}"
   resource_group_name = "${var.resource_group}"
 

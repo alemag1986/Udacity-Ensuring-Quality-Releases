@@ -1,6 +1,15 @@
 # Resource Group/Location
-variable "location" {}
+variable "location" {
+    type          = string
+}
+variable "resource_group" {
+    type          = string
+}
 
-variable "application_type" {}
-variable "resource_type" {}
-variable "resource_group" {}
+# Resource App Service
+variable "resource_type" {
+    type          = string
+}
+variable "application_type" {
+    type          = string
+}

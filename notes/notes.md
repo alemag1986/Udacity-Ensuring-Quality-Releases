@@ -18,7 +18,6 @@
 - JMeter ==> DONE
   - Use JMeter to open the Starter.jmx
   - Replace the APPSERVICEURL
-
 - Postman
   - starterAPIs.json
 

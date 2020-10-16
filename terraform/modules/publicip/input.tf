@@ -1,6 +1,15 @@
 # Resource Group/Location
-variable "location" {}
-variable "resource_group" {}
+variable "location" {
+    type          = string
+}
+variable "resource_group" {
+    type          = string
+}
 
-variable "application_type" {}
-variable "resource_type" {}
+# Resource Public IP
+variable "application_type" {
+    type          = string
+}
+variable "resource_type" {
+    type          = string
+}

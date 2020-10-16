@@ -12,6 +12,8 @@
   - one should be of the Test Results page (test case titles from each test)             => CHECK
   - one should be of the output of the Publish Test Results step.                        => CHECK
 
+[link](https://medium.com/@ganeshsirsi/how-to-configure-postman-newman-api-tests-in-azure-devops-or-tfs-and-publish-html-results-caf60a25c8b9)
+
 - Selenium python files
 - screenshot of the successful execution of the Test Suite on a VM in Azure DevOps
   - should contain which user logged in

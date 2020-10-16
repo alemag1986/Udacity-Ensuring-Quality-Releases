@@ -1,5 +1,5 @@
 resource "azurerm_network_interface" "test" {
-  name                = "$NIC-${var.application_type}"
+  name                = "NIC-${var.resource_type}-${var.application_type}"
   location            = var.location
   resource_group_name = var.resource_group
 

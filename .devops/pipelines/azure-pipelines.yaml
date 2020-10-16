@@ -17,11 +17,7 @@ stages:
       inputs:
         targetType: 'inline'
         script: |
-          # Write your commands here
-          
-          echo 'Hello world'
           ls /home/vsts/work/_temp/
-          ls /home/vsts/work/_temp/id_rsa
     - task: TerraformInstaller@0
       displayName: Install Terraform
       inputs:

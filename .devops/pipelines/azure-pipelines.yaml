@@ -12,8 +12,6 @@ stages:
     - task: InstallSSHKey@0
       inputs:
         knownHostsEntry: 'default'
-        sshPublicKey: 'AAAAB3NzaC1yc2EAAAADAQABAAABAQCuixsVsZL8AntDJsei5hdhXYkY/J9INbD5TvqhcCW7kOWOWytHmQ2Itq6qghoJ/xqiJsnxYqcNrq+mVZi6Oe03u9f4cINPuNVmN/uraht92tT1rKrz2PN2/MccbHMugBfzQyxopJ2MdElpYLMMKB7um+/mYL/XJjsb0rL8E40uLZw1BxZud85VnCsSAXbwMH37lhSWjSxdpmx/RWOyV0zKYRg6G5gO4lT3B8mk7M2PvWAA/N64KwAF7pjSgHhLqjCzcAPcvaA0S3dJX+/HaHN2yxpV8mLy2Htji/aB88CqsNYRZcLilLdIr2pkOJjTjcMey0OvJb7KY2Fn9RWAbByj'
-        sshPassphrase: 'asdasd'
         sshKeySecureFile: 'id_rsa'
     - task: TerraformInstaller@0
       displayName: Install Terraform

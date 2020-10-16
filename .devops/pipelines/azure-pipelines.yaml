@@ -96,7 +96,7 @@ stages:
             inputs:
               azureSubscription: 'EnsuringQualityReleasesSC'
               appType: 'webApp'
-              appName: 'EQR-AppService'
+              appName: 'WAS-EQR'
               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
               deploymentMethod: 'auto'
   - deployment: VMDeploy

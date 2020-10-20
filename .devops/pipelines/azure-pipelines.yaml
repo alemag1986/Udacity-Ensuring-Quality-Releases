@@ -124,7 +124,8 @@ stages:
                 sudo chown root:root /usr/bin/chromedriver
                 sudo chmod +x /usr/bin/chromedriver
                 chromium-browser -version
-                ls
+                chromedriver --version
+                python3 automatedtesting/selenium/login.py
 
                 
 # - stage: IntegrationTests

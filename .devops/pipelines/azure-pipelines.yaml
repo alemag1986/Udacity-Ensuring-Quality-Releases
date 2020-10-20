@@ -148,6 +148,7 @@ stages:
               script: |
                 unzip $(Pipeline.Workspace)/selenium/selenium-tests.zip -d ./
                 ls $(Pipeline.Workspace)
+                ls
                 
 # - stage: IntegrationTests
 #   displayName: Integration Tests

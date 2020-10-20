@@ -146,9 +146,8 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-              unzip '$(Pipeline.Workspace)/selenium-tests.zip' -d .
-              ls '$(Pipeline.Workspace)'
-
+              unzip $(Pipeline.Workspace)/selenium-tests.zip -d .
+              ls $(Pipeline.Workspace)
                 
 # - stage: IntegrationTests
 #   displayName: Integration Tests

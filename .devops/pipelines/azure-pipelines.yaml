@@ -127,6 +127,10 @@ stages:
                 pip3 install selenium
                 
                 # download chrome driver
+                #FILE=/etc/resolv.conf
+                # if [ -f "$FILE" ]; then
+                #   echo "$FILE exists."
+                # fi
                 wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
                 # install chrome driver
                 unzip chromedriver_linux64.zip

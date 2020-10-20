@@ -112,10 +112,6 @@ stages:
       resourceType: VirtualMachine
     strategy:
       runOnce:
-        preDeploy:
-          steps:
-          - download: current
-            artifact: selenium
         deploy:
           steps:
           - task: Bash@3
@@ -139,8 +135,12 @@ stages:
                 sudo chmod +x /usr/bin/chromedriver
                 chromium-browser -version
                 chromedriver --version
-                ls
-                unzip selenium-tests.zip
+          - download: current
+            artifact: selenium
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: 'ls'
 
                 
 # - stage: IntegrationTests

@@ -146,10 +146,9 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                ls $(Pipeline.Workspace)/selenium
                 unzip $(Pipeline.Workspace)/selenium/selenium-tests.zip -d ./
-                ls $(Pipeline.Workspace)
-                ls
+                ls selenium
+                python3 selenium/login.py
                 
 # - stage: IntegrationTests
 #   displayName: Integration Tests

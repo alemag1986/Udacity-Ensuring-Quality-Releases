@@ -127,11 +127,12 @@ stages:
                 pip3 install selenium
                 
                 # download chrome driver
-                #FILE=/etc/resolv.conf
-                # if [ -f "$FILE" ]; then
-                #   echo "$FILE exists."
-                # fi
-                wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+                FILE=chromedriver_linux64.zip
+                if [ -f "$FILE" ]; then
+                  echo "$FILE exists."
+                else
+                  wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+                fi
                 # install chrome driver
                 unzip chromedriver_linux64.zip
                 sudo mv chromedriver /usr/bin/chromedriver
@@ -141,6 +142,12 @@ stages:
                 chromedriver --version
           - download: current
             artifact: selenium
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'selenium'
+              downloadPath: '$(System.ArtifactsDirectory)'
           - task: Bash@3
             inputs:
               targetType: 'inline'

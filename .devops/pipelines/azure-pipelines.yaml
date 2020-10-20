@@ -142,16 +142,12 @@ stages:
                 chromedriver --version
           - download: current
             artifact: selenium
-          - task: DownloadBuildArtifacts@0
-            inputs:
-              buildType: 'current'
-              downloadType: 'single'
-              artifactName: 'selenium'
-              downloadPath: '$(System.ArtifactsDirectory)'
           - task: Bash@3
             inputs:
               targetType: 'inline'
-              script: 'ls'
+              script: |
+              unzip '$(Pipeline.Workspace)/selenium-tests.zip' -d .
+              ls '$(Pipeline.Workspace)'
 
                 
 # - stage: IntegrationTests

@@ -39,7 +39,6 @@ stages:
         provider: 'azurerm'
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        commandOptions: '-lock=false'
         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
     - task: TerraformTaskV1@0
       displayName: Terraform Validate and Apply  

@@ -139,7 +139,8 @@ stages:
                 sudo chmod +x /usr/bin/chromedriver
                 chromium-browser -version
                 chromedriver --version
-          
+                ls
+                unzip selenium-tests.zip
 
                 
 # - stage: IntegrationTests

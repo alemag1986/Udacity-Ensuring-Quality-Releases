@@ -76,45 +76,56 @@ stages:
 #       displayName: 'Upload Package'
 #       artifact: drop-fakerestapi
 
-# - stage: WebAppDeployment
-#   displayName: Web App Deployment
-#   jobs:
-#   - deployment: FakeRestAPI
-#     pool:
-#       vmImage: 'Ubuntu-16.04'
-#     environment: 'WAP-TEST'
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - task: AzureWebApp@1
-#             displayName: 'Deploy Azure Web App'
-#             inputs:
-#               azureSubscription: 'EnsuringQualityReleasesSC'
-#               appType: 'webApp'
-#               appName: 'WAS-EQR'
-#               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
-#               deploymentMethod: 'auto'
-#   - deployment: VMDeploy
-#     displayName: VM Deploy
-#     environment:
-#       name:  'VM-TEST'
-#       resourceType: VirtualMachine
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - task: Bash@3
-#             inputs:
-#               targetType: 'inline'
-#               script: |
-#                 #! /bin/bash
+- stage: WebAppDeployment
+  displayName: Web App Deployment
+  jobs:
+  # - deployment: FakeRestAPI
+  #   pool:
+  #     vmImage: 'Ubuntu-16.04'
+  #   environment: 'WAP-TEST'
+  #   strategy:
+  #     runOnce:
+  #       deploy:
+  #         steps:
+  #         - task: AzureWebApp@1
+  #           displayName: 'Deploy Azure Web App'
+  #           inputs:
+  #             azureSubscription: 'EnsuringQualityReleasesSC'
+  #             appType: 'webApp'
+  #             appName: 'WAS-EQR'
+  #             package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
+  #             deploymentMethod: 'auto'
+  - deployment: VMDeploy
+    displayName: VM Deploy
+    environment:
+      name:  'VM-TEST'
+      resourceType: VirtualMachine
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                #! /bin/bash
                 
-#                 sudo apt-get upgrade -y
-#                 sudo apt-get install python3-pip -y
-#                 sudo apt-get install unzip -y
-#                 sudo apt-get install -y chromium-browser
-#                 pip3 install selenium
+                sudo apt-get upgrade -y
+                sudo apt-get install python3-pip -y
+                sudo apt-get install unzip -y
+                sudo apt-get install -y chromium-browser
+                pip3 install selenium
+                
+                # download chrome driver
+                wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+                # install chrome driver
+                unzip chromedriver_linux64.zip
+                sudo mv chromedriver /usr/bin/chromedriver
+                sudo chown root:root /usr/bin/chromedriver
+                sudo chmod +x /usr/bin/chromedriver
+                chromium-browser -version
+                ls
+
                 
 # - stage: IntegrationTests
 #   displayName: Integration Tests
@@ -147,21 +158,21 @@ stages:
 #         testResultsFormat: 'JUnit'
 #         testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/PostmanTests.xml'
 
-- stage: JMeterTests
-  displayName: JMeter Tests
-  jobs:
-  - job: JMeterTests
-    displayName: JMeterTests
-    steps: 
-    - task: JMeterInstaller@0
-      inputs:
-        jmeterVersion: '5.2.1'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/pages.csv -l automatedtesting/jmeter/report/results.jtl -e -o automatedtesting/jmeter/report'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: 'automatedtesting/jmeter/report'
-        ArtifactName: 'jmeter'
-        publishLocation: 'Container'
+# - stage: JMeterTests
+#   displayName: JMeter Tests
+#   jobs:
+#   - job: JMeterTests
+#     displayName: JMeterTests
+#     steps: 
+#     - task: JMeterInstaller@0
+#       inputs:
+#         jmeterVersion: '5.2.1'
+#     - task: Bash@3
+#       inputs:
+#         targetType: 'inline'
+#         script: 'jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/pages.csv -l automatedtesting/jmeter/report/results.jtl -e -o automatedtesting/jmeter/report'
+#     - task: PublishBuildArtifacts@1
+#       inputs:
+#         PathtoPublish: 'automatedtesting/jmeter/report'
+#         ArtifactName: 'jmeter'
+#         publishLocation: 'Container'

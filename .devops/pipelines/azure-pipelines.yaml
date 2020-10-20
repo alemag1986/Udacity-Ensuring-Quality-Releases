@@ -160,3 +160,8 @@ stages:
       inputs:
         targetType: 'inline'
         script: 'jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/pages.csv -l automatedtesting/jmeter/report/results.jtl -e -o automatedtesting/jmeter/report'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/automatedtesting/jmeter/report'
+        ArtifactName: 'jmeter'
+        publishLocation: 'Container'

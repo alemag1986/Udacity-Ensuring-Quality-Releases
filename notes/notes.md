@@ -49,3 +49,10 @@ Run the registration script again.
 Add your user to the sudoers file.
 Update azure-pipelines.yaml with the Environment, and run the pipeline. You can now deploy to the Linux VM.
 Configure Logging for the VM in the Azure Portal.
+
+
+
+backendAzureRmResourceGroupName: 'RG-SUPPORT'
+        backendAzureRmStorageAccountName: 'sageneralsupport'
+        backendAzureRmContainerName: 'terraform-state'
+        backendAzureRmKey: 'ensuring-quality-releases.tfstate'

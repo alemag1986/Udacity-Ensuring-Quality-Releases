@@ -149,7 +149,8 @@ stages:
                 unzip -o $(Pipeline.Workspace)/selenium/selenium-tests.zip -d .
                 ls selenium
                 ls
-                python3 selenium/login.py
+                python3 login.py > ui-logs.log
+                cat ui-logs.log
                 
 # - stage: IntegrationTests
 #   displayName: Integration Tests

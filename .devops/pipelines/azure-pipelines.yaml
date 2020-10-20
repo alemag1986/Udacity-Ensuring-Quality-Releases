@@ -159,4 +159,4 @@ stages:
     - task: Bash@3
       inputs:
         targetType: 'inline'
-        script: 'jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/pages.csv -e -o automatedtesting/jmeter/report'
+        script: 'jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/pages.csv -l automatedtesting/jmeter/report/results.jtl -e -o automatedtesting/jmeter/report'

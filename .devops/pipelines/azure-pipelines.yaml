@@ -1,145 +1,167 @@
+
+trigger:
+  none
+  
 name: Azure Pipelines
 variables:
   python.version: '3.7.6'
   terraform.version: '0.13.4'
 stages:
-- stage: Provisioning
-  displayName: Provisioning
-  jobs: 
-  - job: ProvisioningAppService
-    displayName: Provisioning AppService
-    steps:
-    - task: InstallSSHKey@0
+# - stage: Provisioning
+#   displayName: Provisioning
+#   jobs: 
+#   - job: ProvisioningAppService
+#     displayName: Provisioning AppService
+#     steps:
+#     - task: InstallSSHKey@0
+#       inputs:
+#         knownHostsEntry: 'default'
+#         sshKeySecureFile: 'id_rsa'
+#     - task: Bash@3
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           ls /home/vsts/work/_temp/
+#     - task: TerraformInstaller@0
+#       displayName: Install Terraform
+#       inputs:
+#         terraformVersion: '0.13.4'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Init
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'init'
+#         backendServiceArm: 'EnsuringQualityReleasesSC'
+#         backendAzureRmResourceGroupName: 'RG-SUPPORT'
+#         backendAzureRmStorageAccountName: 'sageneralsupport'
+#         backendAzureRmContainerName: 'terraform-state'
+#         backendAzureRmKey: 'ensuring-quality-releases.tfstate'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Plan
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'plan'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Validate and Apply  
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'apply'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
+
+# - stage: Build
+#   displayName: Build
+#   jobs:
+#   - job: Build
+#     pool:
+#       name: Hosted Ubuntu 1604
+#     steps:
+#     # Needed for Terraform VM deployment
+#     # - task: InstallSSHKey@0
+#     #   inputs:
+#     #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
+#     #     sshPublicKey: 'PUBLIC_KEY'
+#     #     sshKeySecureFile: 'id_rsa'
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive FakeRestAPI'
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+#         includeRootFolder: false
+#         archiveType: 'zip'
+#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+#     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+#       displayName: 'Upload Package'
+#       artifact: drop-fakerestapi
+
+# - stage: WebAppDeployment
+#   displayName: Web App Deployment
+#   jobs:
+#   - deployment: FakeRestAPI
+#     pool:
+#       vmImage: 'Ubuntu-16.04'
+#     environment: 'WAP-TEST'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: AzureWebApp@1
+#             displayName: 'Deploy Azure Web App'
+#             inputs:
+#               azureSubscription: 'EnsuringQualityReleasesSC'
+#               appType: 'webApp'
+#               appName: 'WAS-EQR'
+#               package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
+#               deploymentMethod: 'auto'
+#   - deployment: VMDeploy
+#     displayName: VM Deploy
+#     environment:
+#       name:  'VM-TEST'
+#       resourceType: VirtualMachine
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - task: Bash@3
+#             inputs:
+#               targetType: 'inline'
+#               script: |
+#                 #! /bin/bash
+                
+#                 sudo apt-get upgrade -y
+#                 sudo apt-get install python3-pip -y
+#                 sudo apt-get install unzip -y
+#                 sudo apt-get install -y chromium-browser
+#                 pip3 install selenium
+                
+# - stage: IntegrationTests
+#   displayName: Integration Tests
+#   jobs:
+#   - job: PostmanTests
+#     displayName: PostmanTests
+#     steps: 
+#     - task: NodeTool@0
+#       displayName: Install Node v12.X
+#       inputs:
+#         versionSpec: '12.x'
+#     - task: CmdLine@2
+#       displayName: Install Newman
+#       inputs:
+#         script: 'npm install newman'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)'
+#     - task: CmdLine@2
+#       displayName: Run Tests
+#       inputs:
+#         script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Results/PostmanTests.xml'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)'
+#     - task: CmdLine@2
+#       inputs:
+#         script: 'ls'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)'
+#     - task: PublishTestResults@2
+#       displayName: Publish Test Reports
+#       condition: always()
+#       inputs:
+#         testResultsFormat: 'JUnit'
+#         testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/PostmanTests.xml'
+
+- stage: JMeterTests
+  displayName: JMeter Tests
+  jobs:
+  - job: JMeterTests
+    displayName: JMeterTests
+    steps: 
+    - task: JMeterInstaller@0
       inputs:
-        knownHostsEntry: 'default'
-        sshKeySecureFile: 'id_rsa'
+        jmeterVersion: '5.2.1'
     - task: Bash@3
       inputs:
         targetType: 'inline'
-        script: |
-          ls /home/vsts/work/_temp/
-    - task: TerraformInstaller@0
-      displayName: Install Terraform
+        script: 'jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/pages.csv -l automatedtesting/jmeter/report/results.jtl -e -o automatedtesting/jmeter/report'
+    - task: PublishBuildArtifacts@1
       inputs:
-        terraformVersion: '0.13.4'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Init
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        backendServiceArm: 'EnsuringQualityReleasesSC'
-        backendAzureRmResourceGroupName: 'RG-SUPPORT'
-        backendAzureRmStorageAccountName: 'sageneralsupport'
-        backendAzureRmContainerName: 'terraform-state'
-        backendAzureRmKey: 'ensuring-quality-releases.tfstate'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Plan
-      inputs:
-        provider: 'azurerm'
-        command: 'plan'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Validate and Apply  
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        commandOptions: '-lock=false'
-        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
-
-- stage: Build
-  displayName: Build
-  jobs:
-  - job: Build
-    pool:
-      name: Hosted Ubuntu 1604
-    steps:
-    # Needed for Terraform VM deployment
-    # - task: InstallSSHKey@0
-    #   inputs:
-    #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
-    #     sshPublicKey: 'PUBLIC_KEY'
-    #     sshKeySecureFile: 'id_rsa'
-    - task: ArchiveFiles@2
-      displayName: 'Archive FakeRestAPI'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-        includeRootFolder: false
-        archiveType: 'zip'
-        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-      displayName: 'Upload Package'
-      artifact: drop-fakerestapi
-
-- stage: WebAppDeployment
-  displayName: Web App Deployment
-  jobs:
-  - deployment: FakeRestAPI
-    pool:
-      vmImage: 'Ubuntu-16.04'
-    environment: 'WAP-TEST'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App'
-            inputs:
-              azureSubscription: 'EnsuringQualityReleasesSC'
-              appType: 'webApp'
-              appName: 'WAS-EQR'
-              package: '$(Pipeline.Workspace)/drop-fakerestapi/$(Build.BuildId)-fakerestapi.zip'
-              deploymentMethod: 'auto'
-  - deployment: VMDeploy
-    displayName: VM Deploy
-    environment:
-      name:  'VM-TEST'
-      resourceType: VirtualMachine
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: Bash@3
-            inputs:
-              targetType: 'inline'
-              script: |
-                #! /bin/bash
-                
-                sudo apt-get upgrade -y
-                sudo apt-get install python3-pip -y
-                sudo apt-get install unzip -y
-                sudo apt-get install -y chromium-browser
-                pip3 install selenium
-                
-- stage: IntegrationTests
-  displayName: Integration Tests
-  jobs:
-  - job: PostmanTests
-    displayName: PostmanTests
-    steps: 
-    - task: NodeTool@0
-      displayName: Install Node v12.X
-      inputs:
-        versionSpec: '12.x'
-    - task: CmdLine@2
-      displayName: Install Newman
-      inputs:
-        script: 'npm install newman'
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: CmdLine@2
-      displayName: Run Tests
-      inputs:
-        script: 'newman run automatedtesting/postman/StarterAPIs.json --reporters cli,junit --reporter-junit-export Results/PostmanTests.xml'
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: CmdLine@2
-      inputs:
-        script: 'ls'
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
-    - task: PublishTestResults@2
-      displayName: Publish Test Reports
-      condition: always()
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/PostmanTests.xml'
+        PathtoPublish: 'automatedtesting/jmeter/report'
+        ArtifactName: 'jmeter'
+        publishLocation: 'Container'

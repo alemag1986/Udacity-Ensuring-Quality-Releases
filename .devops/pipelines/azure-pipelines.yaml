@@ -149,6 +149,7 @@ stages:
                 unzip -o $(Pipeline.Workspace)/selenium/selenium-tests.zip -d .
                 ls selenium
                 ls
+                mkdir /var/logs
                 python3 login.py > /var/logs/ui-logs.log
                 ls /var/logs
                 cat /var/logs/ui-logs.log

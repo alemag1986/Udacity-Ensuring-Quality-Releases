@@ -7,50 +7,50 @@ variables:
   python.version: '3.7.6'
   terraform.version: '0.13.4'
 stages:
-# - stage: Provisioning
-#   displayName: Provisioning
-#   jobs: 
-#   - job: ProvisioningAppService
-#     displayName: Provisioning AppService
-#     steps:
-#     - task: InstallSSHKey@0
-#       inputs:
-#         knownHostsEntry: 'default'
-#         sshKeySecureFile: 'id_rsa'
-#     - task: Bash@3
-#       inputs:
-#         targetType: 'inline'
-#         script: |
-#           ls /home/vsts/work/_temp/
-#     - task: TerraformInstaller@0
-#       displayName: Install Terraform
-#       inputs:
-#         terraformVersion: '0.13.4'
-#     - task: TerraformTaskV1@0
-#       displayName: Terraform Init
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'init'
-#         backendServiceArm: 'EnsuringQualityReleasesSC'
-#         backendAzureRmResourceGroupName: 'RG-SUPPORT'
-#         backendAzureRmStorageAccountName: 'sageneralsupport'
-#         backendAzureRmContainerName: 'terraform-state'
-#         backendAzureRmKey: 'ensuring-quality-releases.tfstate'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-#     - task: TerraformTaskV1@0
-#       displayName: Terraform Plan
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'plan'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-#         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
-#     - task: TerraformTaskV1@0
-#       displayName: Terraform Validate and Apply  
-#       inputs:
-#         provider: 'azurerm'
-#         command: 'apply'
-#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-#         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
+- stage: Provisioning
+  displayName: Provisioning
+  jobs: 
+  - job: ProvisioningAppService
+    displayName: Provisioning AppService
+    steps:
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: 'default'
+        sshKeySecureFile: 'id_rsa'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          ls /home/vsts/work/_temp/
+    - task: TerraformInstaller@0
+      displayName: Install Terraform
+      inputs:
+        terraformVersion: '0.13.4'
+    - task: TerraformTaskV1@0
+      displayName: Terraform Init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        backendServiceArm: 'EnsuringQualityReleasesSC'
+        backendAzureRmResourceGroupName: 'RG-SUPPORT'
+        backendAzureRmStorageAccountName: 'sageneralsupport'
+        backendAzureRmContainerName: 'terraform-state'
+        backendAzureRmKey: 'ensuring-quality-releases.tfstate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+    - task: TerraformTaskV1@0
+      displayName: Terraform Plan
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
+    - task: TerraformTaskV1@0
+      displayName: Terraform Validate and Apply  
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
 
 - stage: Build
   displayName: Build
@@ -140,6 +140,9 @@ stages:
                 sudo chmod +x /usr/bin/chromedriver
                 chromium-browser -version
                 chromedriver --version
+                # agent log analytics
+                wget https://raw.githubusercontent.com/Microsoft/OMS-Agent-for-Linux/master/installer/scripts/onboard_agent.sh && sh onboard_agent.sh -w dbf2bd83-6d47-436b-a499-a2b566def8fe -s MuSR8Ti5MMi0E+9+1NM4NxCxFqJcfLzuGD0EtGhjXo3Vhy/THcSdCf1WyQnkXafD+6DiFjiOAEfJiQh6EbZVeg== -d opinsights.azure.com
+
           - download: current
             artifact: selenium
           - task: Bash@3

@@ -151,7 +151,8 @@ stages:
                 ls
                 pwd
                 sudo mkdir /var/logs
-                sudo python3 login.py > /var/logs/ui-logs.log
+                python3 login.py > ui-logs.log
+                sudo mv ui-logs.log /var/logs
                 ls /var/logs
                 cat /var/logs/ui-logs.log
                 

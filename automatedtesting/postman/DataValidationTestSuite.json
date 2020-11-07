@@ -6,40 +6,48 @@
 	},
 	"item": [
 		{
-			"name": "Delete Employee",
+			"name": "Create Employee",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "8202af13-5ad0-45c3-a35d-dcf335482367",
+						"id": "0d142dc7-9121-4bc2-8673-fe2cb634040e",
 						"exec": [
+							"var json = pm.response.json();",
+							"pm.environment.set(\"id\", json.data.id);",
+							"pm.variables.set(\"user_id\", json.data.id);",
+							"",
 							"var schema = {",
 							"    \"type\": \"object\",",
 							"    \"properties\": {",
 							"        \"status\"  : { \"type\": \"string\" },",
-							"        \"data\"    : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"object\",",
+							"                      \"properties\": {",
+							"                          \"id\": { \"type\": \"number\" },",
+							"                          \"name\": { \"type\": \"string\" },",
+							"                          \"salary\": { \"type\": \"string\" },",
+							"                          \"age\": { \"type\": \"string\" }",
+							"                      }",
+							"                    },",
 							"\t\t\"message\" : { \"type\": \"string\" }",
 							"    }",
 							"};",
-							"",
-							"pm.test('Validate schema', function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
-							"});",
 							"",
 							"pm.test(\"Validate Success\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.status).to.eql(\"success\");",
 							"});",
 							"",
-							"pm.test(\"Validate Id\", function () {",
+							"pm.test('Validate schema', function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.data).to.eql(\"\"+pm.variables.get(\"id\"));",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
 							"});",
 							"",
-							"pm.test(\"Validate Message\", function () {",
+							"pm.test(\"Validate Data\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.message).to.eql(\"Successfully! Record has been deleted\");",
+							"    pm.expect(jsonData.data.name).to.eql(pm.variables.get(\"name\"));",
+							"    pm.expect(jsonData.data.age).to.eql(pm.variables.get(\"age\"));",
+							"    pm.expect(jsonData.data.salary).to.eql(pm.variables.get(\"salary\"));",
 							"});"
 						],
 						"type": "text/javascript"
@@ -47,21 +55,28 @@
 				}
 			],
 			"request": {
-				"method": "DELETE",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{url}}/api/{{version}}/delete/{{id}}",
+					"raw": "{{url}}/api/{{version}}/create",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"api",
 						"{{version}}",
-						"delete",
-						"{{id}}"
+						"create"
 					]
-				},
-				"description": "Delete an employee record"
+				}
 			},
 			"response": []
 		},
@@ -251,48 +266,40 @@
 			"response": []
 		},
 		{
-			"name": "Create Employee",
+			"name": "Delete Employee",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "0d142dc7-9121-4bc2-8673-fe2cb634040e",
+						"id": "8202af13-5ad0-45c3-a35d-dcf335482367",
 						"exec": [
-							"var json = pm.response.json();",
-							"pm.environment.set(\"id\", json.data.id);",
-							"pm.variables.set(\"user_id\", json.data.id);",
-							"",
 							"var schema = {",
 							"    \"type\": \"object\",",
 							"    \"properties\": {",
 							"        \"status\"  : { \"type\": \"string\" },",
-							"        \"data\"    : { \"type\": \"object\",",
-							"                      \"properties\": {",
-							"                          \"id\": { \"type\": \"number\" },",
-							"                          \"name\": { \"type\": \"string\" },",
-							"                          \"salary\": { \"type\": \"string\" },",
-							"                          \"age\": { \"type\": \"string\" }",
-							"                      }",
-							"                    },",
+							"        \"data\"    : { \"type\": \"string\" },",
 							"\t\t\"message\" : { \"type\": \"string\" }",
 							"    }",
 							"};",
-							"",
-							"pm.test(\"Validate Success\", function () {",
-							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.status).to.eql(\"success\");",
-							"});",
 							"",
 							"pm.test('Validate schema', function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
 							"});",
 							"",
-							"pm.test(\"Validate Data\", function () {",
+							"pm.test(\"Validate Success\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.data.name).to.eql(pm.variables.get(\"name\"));",
-							"    pm.expect(jsonData.data.age).to.eql(pm.variables.get(\"age\"));",
-							"    pm.expect(jsonData.data.salary).to.eql(pm.variables.get(\"salary\"));",
+							"    pm.expect(jsonData.status).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Validate Id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data).to.eql(\"\"+pm.variables.get(\"id\"));",
+							"});",
+							"",
+							"pm.test(\"Validate Message\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"Successfully! Record has been deleted\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -300,28 +307,21 @@
 				}
 			],
 			"request": {
-				"method": "POST",
+				"method": "DELETE",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "{{url}}/api/{{version}}/create",
+					"raw": "{{url}}/api/{{version}}/delete/{{id}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"api",
 						"{{version}}",
-						"create"
+						"delete",
+						"{{id}}"
 					]
-				}
+				},
+				"description": "Delete an employee record"
 			},
 			"response": []
 		}

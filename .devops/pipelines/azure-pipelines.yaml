@@ -179,6 +179,7 @@ stages:
       inputs:
         script: 'newman run automatedtesting/postman/RegressionTestSuite.json -e automatedtesting/postman/RegressionTestSuite.Environment.json --reporters cli,junit --reporter-junit-export Results/PostmanTests.xml'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
+      continueOnError: true
     - task: CmdLine@2
       inputs:
         script: 'ls'

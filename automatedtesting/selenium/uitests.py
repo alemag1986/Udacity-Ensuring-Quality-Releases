@@ -13,7 +13,7 @@ cart_url = 'https://www.saucedemo.com/cart.html'
 def create_driver():
     print ('Starting the browser...')
     options = ChromeOptions()
-    ##options.add_argument("--headless") 
+    options.add_argument("--headless") 
     return webdriver.Chrome(options=options)
     
 

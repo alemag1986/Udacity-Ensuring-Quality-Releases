@@ -175,9 +175,15 @@ stages:
         script: 'npm install newman'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
     - task: CmdLine@2
-      displayName: Run Tests
+      displayName: Run Regression Tests
       inputs:
-        script: 'newman run automatedtesting/postman/RegressionTestSuite.json -e automatedtesting/postman/RegressionTestSuite.Environment.json --delay-request 2000 --reporters cli,junit --reporter-junit-export Results/PostmanTests.xml'
+        script: 'newman run automatedtesting/postman/RegressionTestSuite.json -e automatedtesting/postman/RegressionTestSuite.Environment.json --delay-request 2000 --reporters cli,junit --reporter-junit-export Results/RegressionTests.xml'
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+      continueOnError: true
+    - task: CmdLine@2
+      displayName: Run Data Validation Tests
+      inputs:
+        script: 'newman run automatedtesting/postman/DataValidationTestSuiteTestSuite.json -e automatedtesting/postman/DataValidationTestSuite.Environment.json --delay-request 2000 --reporters cli,junit --reporter-junit-export Results/DataValidationTests.xml'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
       continueOnError: true
     - task: CmdLine@2
@@ -189,7 +195,7 @@ stages:
       condition: always()
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/PostmanTests.xml'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)/Results/*.xml'
 
 # - stage: JMeterTests
 #   displayName: JMeter Tests

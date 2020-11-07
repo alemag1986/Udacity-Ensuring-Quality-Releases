@@ -7,88 +7,88 @@ variables:
   python.version: '3.7.6'
   terraform.version: '0.13.4'
 stages:
-- stage: Provisioning
-  displayName: Provisioning
-  jobs: 
-  - job: ProvisioningAppService
-    displayName: Provisioning AppService
-    steps:
-    - task: InstallSSHKey@0
-      inputs:
-        knownHostsEntry: 'default'
-        sshKeySecureFile: 'id_rsa'
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: |
-          ls /home/vsts/work/_temp/
-    - task: TerraformInstaller@0
-      displayName: Install Terraform
-      inputs:
-        terraformVersion: '0.13.4'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Init
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        backendServiceArm: 'EnsuringQualityReleasesSC'
-        backendAzureRmResourceGroupName: 'RG-SUPPORT'
-        backendAzureRmStorageAccountName: 'sageneralsupport'
-        backendAzureRmContainerName: 'terraform-state'
-        backendAzureRmKey: 'ensuring-quality-releases.tfstate'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Plan
-      inputs:
-        provider: 'azurerm'
-        command: 'plan'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
-    - task: TerraformTaskV1@0
-      displayName: Terraform Validate and Apply  
-      inputs:
-        provider: 'azurerm'
-        command: 'apply'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
-        environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
-
-- stage: Build
-  displayName: Build
-  jobs:
-  - job: Build
-    pool:
-      name: Hosted Ubuntu 1604
-    steps:
-#     # Needed for Terraform VM deployment
-#     # - task: InstallSSHKey@0
-#     #   inputs:
-#     #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
-#     #     sshPublicKey: 'PUBLIC_KEY'
-#     #     sshKeySecureFile: 'id_rsa'
-#     - task: ArchiveFiles@2
-#       displayName: 'Archive FakeRestAPI'
+# - stage: Provisioning
+#   displayName: Provisioning
+#   jobs: 
+#   - job: ProvisioningAppService
+#     displayName: Provisioning AppService
+#     steps:
+#     - task: InstallSSHKey@0
 #       inputs:
-#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-#         includeRootFolder: false
-#         archiveType: 'zip'
-#         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-#     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-#       displayName: 'Upload Package'
-#       artifact: drop-fakerestapi
-    - task: ArchiveFiles@2
-      displayName: 'Archive files'
-      inputs:
-        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
-        replaceExistingArchive: true
-    - upload: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
-      artifact: selenium
+#         knownHostsEntry: 'default'
+#         sshKeySecureFile: 'id_rsa'
+#     - task: Bash@3
+#       inputs:
+#         targetType: 'inline'
+#         script: |
+#           ls /home/vsts/work/_temp/
+#     - task: TerraformInstaller@0
+#       displayName: Install Terraform
+#       inputs:
+#         terraformVersion: '0.13.4'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Init
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'init'
+#         backendServiceArm: 'EnsuringQualityReleasesSC'
+#         backendAzureRmResourceGroupName: 'RG-SUPPORT'
+#         backendAzureRmStorageAccountName: 'sageneralsupport'
+#         backendAzureRmContainerName: 'terraform-state'
+#         backendAzureRmKey: 'ensuring-quality-releases.tfstate'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Plan
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'plan'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
+#     - task: TerraformTaskV1@0
+#       displayName: Terraform Validate and Apply  
+#       inputs:
+#         provider: 'azurerm'
+#         command: 'apply'
+#         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
+#         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
 
-- stage: WebAppDeployment
-  displayName: Web App Deployment
-  jobs:
+# - stage: Build
+#   displayName: Build
+#   jobs:
+#   - job: Build
+#     pool:
+#       name: Hosted Ubuntu 1604
+#     steps:
+# #     # Needed for Terraform VM deployment
+# #     # - task: InstallSSHKey@0
+# #     #   inputs:
+# #     #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
+# #     #     sshPublicKey: 'PUBLIC_KEY'
+# #     #     sshKeySecureFile: 'id_rsa'
+# #     - task: ArchiveFiles@2
+# #       displayName: 'Archive FakeRestAPI'
+# #       inputs:
+# #         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+# #         includeRootFolder: false
+# #         archiveType: 'zip'
+# #         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+# #     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+# #       displayName: 'Upload Package'
+# #       artifact: drop-fakerestapi
+#     - task: ArchiveFiles@2
+#       displayName: 'Archive files'
+#       inputs:
+#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+#         includeRootFolder: false
+#         archiveType: zip
+#         archiveFile: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
+#         replaceExistingArchive: true
+#     - upload: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
+#       artifact: selenium
+
+# - stage: WebAppDeployment
+#   displayName: Web App Deployment
+#   jobs:
   # - deployment: FakeRestAPI
   #   pool:
   #     vmImage: 'Ubuntu-16.04'

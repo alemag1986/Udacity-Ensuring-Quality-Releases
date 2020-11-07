@@ -19,7 +19,7 @@ def create_driver():
 
 # Start the browser and login with standard_user
 def test_login (driver, user, password):
-    print (f'Test: login. Navigating to the demo page to login, {login_url}.')
+    print ('Test: login. Navigating to the demo page to login' + login_url)
     driver.get(login_url)
     print ('Login attempt, user: {user},  password: {password}')
     driver.find_element_by_id('user-name').send_keys(user)

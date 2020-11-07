@@ -52,39 +52,39 @@ stages:
 #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform'
 #         environmentServiceNameAzureRM: 'EnsuringQualityReleasesSC'
 
-# - stage: Build
-#   displayName: Build
-#   jobs:
-#   - job: Build
-#     pool:
-#       name: Hosted Ubuntu 1604
-#     steps:
-# #     # Needed for Terraform VM deployment
-# #     # - task: InstallSSHKey@0
-# #     #   inputs:
-# #     #     knownHostsEntry: 'KNOWN_HOSTS_STRING'
-# #     #     sshPublicKey: 'PUBLIC_KEY'
-# #     #     sshKeySecureFile: 'id_rsa'
-# #     - task: ArchiveFiles@2
-# #       displayName: 'Archive FakeRestAPI'
-# #       inputs:
-# #         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
-# #         includeRootFolder: false
-# #         archiveType: 'zip'
-# #         archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
-# #     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
-# #       displayName: 'Upload Package'
-# #       artifact: drop-fakerestapi
-#     - task: ArchiveFiles@2
-#       displayName: 'Archive files'
-#       inputs:
-#         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
-#         includeRootFolder: false
-#         archiveType: zip
-#         archiveFile: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
-#         replaceExistingArchive: true
-#     - upload: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
-#       artifact: selenium
+- stage: Build
+  displayName: Build
+  jobs:
+  - job: Build
+    pool:
+      name: Hosted Ubuntu 1604
+    steps:
+    #Needed for Terraform VM deployment
+    - task: InstallSSHKey@0
+      inputs:
+        knownHostsEntry: 'KNOWN_HOSTS_STRING'
+        sshPublicKey: 'PUBLIC_KEY'
+        sshKeySecureFile: 'id_rsa'
+    - task: ArchiveFiles@2
+      displayName: 'Archive FakeRestAPI'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/fakerestapi'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip'
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId)-fakerestapi.zip
+      displayName: 'Upload Package'
+      artifact: drop-fakerestapi
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/automatedtesting/selenium'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
+        replaceExistingArchive: true
+    - upload: $(Build.ArtifactStagingDirectory)/selenium-tests.zip
+      artifact: selenium
 
 - stage: WebAppDeployment
   displayName: Web App Deployment

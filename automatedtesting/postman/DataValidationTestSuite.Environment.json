@@ -1,0 +1,54 @@
+{
+	"id": "ea489154-e251-4c20-9e25-ea047bef6d6e",
+	"name": "Test Suite gi",
+	"values": [
+		{
+			"key": "url",
+			"value": "http://dummy.restapiexample.com",
+			"enabled": true
+		},
+		{
+			"key": "version",
+			"value": "v1",
+			"enabled": true
+		},
+		{
+			"key": "id",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "name",
+			"value": "test-user-1",
+			"enabled": true
+		},
+		{
+			"key": "salary",
+			"value": "100",
+			"enabled": true
+		},
+		{
+			"key": "age",
+			"value": "30",
+			"enabled": true
+		},
+		{
+			"key": "new_name",
+			"value": "test-user-2",
+			"enabled": true
+		},
+		{
+			"key": "new_salary",
+			"value": "1000",
+			"enabled": true
+		},
+		{
+			"key": "new_age",
+			"value": "50",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-11-07T14:34:36.841Z",
+	"_postman_exported_using": "Postman/7.34.0"
+}

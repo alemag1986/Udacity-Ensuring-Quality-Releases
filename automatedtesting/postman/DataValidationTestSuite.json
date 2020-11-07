@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "0babe1cc-1801-43df-ac9d-c747d36911ac",
+		"name": "Data Validation Test Suite",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Delete Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8202af13-5ad0-45c3-a35d-dcf335482367",
+						"exec": [
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"string\" },",
+							"\t\t\"message\" : { \"type\": \"string\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Validate schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validate Success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Validate Id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data).to.eql(\"\"+pm.variables.get(\"id\"));",
+							"});",
+							"",
+							"pm.test(\"Validate Message\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.message).to.eql(\"Successfully! Record has been deleted\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/{{version}}/delete/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"delete",
+						"{{id}}"
+					]
+				},
+				"description": "Delete an employee record"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5934de18-68a7-4f3b-a923-0b0f47383ccc",
+						"exec": [
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"array\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Validate schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validate Success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"success\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/{{version}}/employees",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c64219f6-7ab0-404d-b90e-9035e7faf140",
+						"exec": [
+							"//per api description",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"object\",",
+							"                      \"properties\": {",
+							"                          \"name\": { \"type\": \"string\" },",
+							"                          \"salary\": { \"type\": \"string\" },",
+							"                          \"age\": { \"type\": \"string\" }",
+							"                      }",
+							"                    },",
+							"\t\t\"message\" : { \"type\": \"string\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Validate schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validate Success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Validate Data\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.name).to.eql(pm.variables.get(\"new_name\"));",
+							"    pm.expect(jsonData.data.salary).to.eql(pm.variables.get(\"new_salary\"));",
+							"    pm.expect(jsonData.data.age).to.eql(pm.variables.get(\"new_age\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{new_name}}\",\n    \"salary\": \"{{new_salary}}\",\n    \"age\": \"{{new_age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/{{version}}/update/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"update",
+						"{{id}}"
+					]
+				},
+				"description": "Update an employee record"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "22129ac3-83d6-45d0-93dd-22597de953c7",
+						"exec": [
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"object\",",
+							"                      \"properties\": {",
+							"                          \"id\": { \"type\": \"string\" },",
+							"                          \"employee_name\": { \"type\": \"string\" },",
+							"                          \"employee_salary\": { \"type\": \"string\" },",
+							"                          \"employee_age\": { \"type\": \"string\" }",
+							"                      }",
+							"                    },",
+							"\t\t\"message\" : { \"type\": \"string\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test('Validate schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validate Success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"Validate Data\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.id).to.eql(pm.variables.get(\"user_id\"));",
+							"    pm.expect(jsonData.data.employee_name).to.eql(pm.variables.get(\"name\"));",
+							"    pm.expect(jsonData.data.employee_salary).to.eql(pm.variables.get(\"salary\"));",
+							"    pm.expect(jsonData.data.employee_age).to.eql(pm.variables.get(\"age\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/{{version}}/employee/{{id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"employee",
+						"{{id}}"
+					]
+				},
+				"description": "Get a single employee data"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d142dc7-9121-4bc2-8673-fe2cb634040e",
+						"exec": [
+							"var json = pm.response.json();",
+							"pm.environment.set(\"id\", json.data.id);",
+							"pm.variables.set(\"user_id\", json.data.id);",
+							"",
+							"var schema = {",
+							"    \"type\": \"object\",",
+							"    \"properties\": {",
+							"        \"status\"  : { \"type\": \"string\" },",
+							"        \"data\"    : { \"type\": \"object\",",
+							"                      \"properties\": {",
+							"                          \"id\": { \"type\": \"number\" },",
+							"                          \"name\": { \"type\": \"string\" },",
+							"                          \"salary\": { \"type\": \"string\" },",
+							"                          \"age\": { \"type\": \"string\" }",
+							"                      }",
+							"                    },",
+							"\t\t\"message\" : { \"type\": \"string\" }",
+							"    }",
+							"};",
+							"",
+							"pm.test(\"Validate Success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test('Validate schema', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Validate Data\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.name).to.eql(pm.variables.get(\"name\"));",
+							"    pm.expect(jsonData.data.age).to.eql(pm.variables.get(\"age\"));",
+							"    pm.expect(jsonData.data.salary).to.eql(pm.variables.get(\"salary\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"salary\": \"{{salary}}\",\n    \"age\": \"{{age}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/{{version}}/create",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"{{version}}",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

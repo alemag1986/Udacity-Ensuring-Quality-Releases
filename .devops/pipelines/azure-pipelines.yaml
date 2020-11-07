@@ -177,7 +177,7 @@ stages:
     - task: CmdLine@2
       displayName: Run Tests
       inputs:
-        script: 'newman run automatedtesting/postman/RegressionTestSuite.json -e automatedtesting/postman/RegressionTestSuite.Environment.json --delay 2000 --reporters cli,junit --reporter-junit-export Results/PostmanTests.xml'
+        script: 'newman run automatedtesting/postman/RegressionTestSuite.json -e automatedtesting/postman/RegressionTestSuite.Environment.json --delay-request 2000 --reporters cli,junit --reporter-junit-export Results/PostmanTests.xml'
         workingDirectory: '$(System.DefaultWorkingDirectory)'
       continueOnError: true
     - task: CmdLine@2

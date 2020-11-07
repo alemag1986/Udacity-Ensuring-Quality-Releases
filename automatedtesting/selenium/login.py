@@ -2,6 +2,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 
+#from datetime import datetime
+#datetime.now().strftime("%m-%d-%y %H:%M:%S")
 
 # Start the browser and login with standard_user
 def login (user, password):

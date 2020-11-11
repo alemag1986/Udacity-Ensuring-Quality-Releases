@@ -29,16 +29,6 @@
             <stringProp name="Argument.value">443</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="idBook" elementType="Argument">
-            <stringProp name="Argument.name">idBook</stringProp>
-            <stringProp name="Argument.value">10</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="id" elementType="Argument">
-            <stringProp name="Argument.name">id</stringProp>
-            <stringProp name="Argument.value">10</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -69,14 +59,14 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">2</stringProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.duration">120</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="activities all GET" enabled="true">
@@ -125,10 +115,10 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 1,&#xd;
-  &quot;Title&quot;: &quot;title&quot;,&#xd;
-  &quot;DueDate&quot;: &quot;2020-11-11T00:52:44.430Z&quot;,&#xd;
-  &quot;Completed&quot;: false&#xd;
+  &quot;ID&quot;: ${ActivityID},&#xd;
+  &quot;Title&quot;: ${ActivityTitle},&#xd;
+  &quot;DueDate&quot;: ${ActivityDueDate},&#xd;
+  &quot;Completed&quot;: ${ActivityCompleted}&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -157,10 +147,10 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 1,&#xd;
-  &quot;Title&quot;: &quot;string&quot;,&#xd;
-  &quot;DueDate&quot;: &quot;2020-11-11T00:52:44.431Z&quot;,&#xd;
-  &quot;Completed&quot;: true&#xd;
+  &quot;ID&quot;: ${ActivityID},&#xd;
+  &quot;Title&quot;: ${ActivityTitle},&#xd;
+  &quot;DueDate&quot;: ${ActivityDueDate},&#xd;
+  &quot;Completed&quot;: ${ActivityCompleted}&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -170,7 +160,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/Activities/${id}</stringProp>
+          <stringProp name="HTTPSampler.path">/api/Activities/${ActivityID}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -210,7 +200,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/authors/books/${idBook}</stringProp>
+          <stringProp name="HTTPSampler.path">/authors/books/${bookId}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -269,11 +259,16 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 1,&#xd;
-  &quot;IDBook&quot;: 1,&#xd;
-  &quot;FirstName&quot;: &quot;string&quot;,&#xd;
-  &quot;LastName&quot;: &quot;string&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${AuthorID},&#xd;
+  &quot;IDBook&quot;: ${AuthorIDBook},&#xd;
+  &quot;FirstName&quot;: ${AuthorFirstName},&#xd;
+  &quot;LastName&quot;: ${AuthorLastName}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -301,11 +296,13 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 1,&#xd;
-  &quot;IDBook&quot;: 1,&#xd;
-  &quot;FirstName&quot;: &quot;string&quot;,&#xd;
-  &quot;LastName&quot;: &quot;string&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${AuthorID},&#xd;
+  &quot;IDBook&quot;: ${AuthorIDBook},&#xd;
+  &quot;FirstName&quot;: ${AuthorFirstName},&#xd;
+  &quot;LastName&quot;: ${AuthorLastName}&#xd;
+}&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -314,7 +311,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/Authors/${id}</stringProp>
+          <stringProp name="HTTPSampler.path">/api/Authors/${AuthorID}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -393,13 +390,17 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 10,&#xd;
-  &quot;Title&quot;: &quot;string&quot;,&#xd;
-  &quot;Description&quot;: &quot;string&quot;,&#xd;
-  &quot;PageCount&quot;: 0,&#xd;
-  &quot;Excerpt&quot;: &quot;string&quot;,&#xd;
-  &quot;PublishDate&quot;: &quot;2020-11-11T00:52:44.431Z&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${BookID},&#xd;
+  &quot;Title&quot;: ${BookTitle},&#xd;
+  &quot;Description&quot;: ${BookDescription},&#xd;
+  &quot;PageCount&quot;: ${BookPageCount},&#xd;
+  &quot;Excerpt&quot;: ${BookExcerpt},&#xd;
+  &quot;PublishDate&quot;: ${BookPublishDate}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -408,7 +409,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/Books/${id}</stringProp>
+          <stringProp name="HTTPSampler.path">/api/Books/${BookID}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -427,13 +428,20 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 10,&#xd;
-  &quot;Title&quot;: &quot;string&quot;,&#xd;
-  &quot;Description&quot;: &quot;string&quot;,&#xd;
-  &quot;PageCount&quot;: 0,&#xd;
-  &quot;Excerpt&quot;: &quot;string&quot;,&#xd;
-  &quot;PublishDate&quot;: &quot;2020-11-11T00:52:44.431Z&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${BookID},&#xd;
+  &quot;Title&quot;: ${BookTitle},&#xd;
+  &quot;Description&quot;: ${BookDescription},&#xd;
+  &quot;PageCount&quot;: ${BookPageCount},&#xd;
+  &quot;Excerpt&quot;: ${BookExcerpt},&#xd;
+  &quot;PublishDate&quot;: ${BookPublishDate}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -522,7 +530,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/books/covers/${idBook}</stringProp>
+          <stringProp name="HTTPSampler.path">/books/covers/${bookId}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -541,10 +549,11 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 10,&#xd;
-  &quot;IDBook&quot;: 10,&#xd;
-  &quot;Url&quot;: &quot;string&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${CoverPhotosID},&#xd;
+  &quot;IDBook&quot;: ${CoverPhotosIDBook},&#xd;
+  &quot;Url&quot;: ${CoverPhotosUrl}&#xd;
+}&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -553,7 +562,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/CoverPhotos/${id}</stringProp>
+          <stringProp name="HTTPSampler.path">/api/CoverPhotos/${CoverPhotosID}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -572,10 +581,13 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 10,&#xd;
-  &quot;IDBook&quot;: 10,&#xd;
-  &quot;Url&quot;: &quot;string&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${CoverPhotosID},&#xd;
+  &quot;IDBook&quot;: ${CoverPhotosIDBook},&#xd;
+  &quot;Url&quot;: ${CoverPhotosUrl}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -663,10 +675,14 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 10,&#xd;
-  &quot;UserName&quot;: &quot;string&quot;,&#xd;
-  &quot;Password&quot;: &quot;string&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${UserID},&#xd;
+  &quot;UserName&quot;: ${UserUserName},&#xd;
+  &quot;Password&quot;: ${UserPassword}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -694,10 +710,13 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-  &quot;ID&quot;: 10,&#xd;
-  &quot;UserName&quot;: &quot;string&quot;,&#xd;
-  &quot;Password&quot;: &quot;string&quot;&#xd;
-}</stringProp>
+  &quot;ID&quot;: ${UserID},&#xd;
+  &quot;UserName&quot;: ${UserUserName},&#xd;
+  &quot;Password&quot;: ${UserPassword}&#xd;
+}&#xd;
+&#xd;
+&#xd;
+</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -706,7 +725,7 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/api/Users/${id}</stringProp>
+          <stringProp name="HTTPSampler.path">/api/Users/${UserID}</stringProp>
           <stringProp name="HTTPSampler.method">PUT</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -789,6 +808,90 @@
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV IDs Source" enabled="true">
+        <stringProp name="filename">general_ids.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">id</stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV BookIDs Source" enabled="true">
+        <stringProp name="filename">book_ids.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">bookId</stringProp>
+        <boolProp name="ignoreFirstLine">false</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Book Objs" enabled="true">
+        <stringProp name="filename">objs_books.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">BookID,BookTitle,BookDescription,BookPageCount,BookExcerpt,BookPublishDate</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Activity Objs" enabled="true">
+        <stringProp name="filename">objs_activity.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">ActivityID,ActivityTitle,ActivityDueDate,ActivityCompleted</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV CoverPhotos Objs" enabled="true">
+        <stringProp name="filename">objs_cover_photos.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">CoverPhotosID,CoverPhotosIDBook,CoverPhotosUrl</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV User Objs" enabled="true">
+        <stringProp name="filename">objs_users.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">UserID,UserUserName,UserPassword</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
+      <hashTree/>
+      <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Author Objs" enabled="true">
+        <stringProp name="filename">objs_author.csv</stringProp>
+        <stringProp name="fileEncoding"></stringProp>
+        <stringProp name="variableNames">AuthorID,AuthorIDBook,AuthorFirstName,AuthorLastName</stringProp>
+        <boolProp name="ignoreFirstLine">true</boolProp>
+        <stringProp name="delimiter">,</stringProp>
+        <boolProp name="quotedData">false</boolProp>
+        <boolProp name="recycle">true</boolProp>
+        <boolProp name="stopThread">false</boolProp>
+        <stringProp name="shareMode">shareMode.all</stringProp>
+      </CSVDataSet>
       <hashTree/>
     </hashTree>
   </hashTree>

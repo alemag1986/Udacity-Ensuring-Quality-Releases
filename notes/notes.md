@@ -53,6 +53,6 @@ Configure Logging for the VM in the Azure Portal.
 
 
 backendAzureRmResourceGroupName: 'RG-SUPPORT'
-        backendAzureRmStorageAccountName: 'sageneralsupport'
-        backendAzureRmContainerName: 'terraform-state'
-        backendAzureRmKey: 'ensuring-quality-releases.tfstate'
+backendAzureRmStorageAccountName: 'sageneralsupport'
+backendAzureRmContainerName: 'terraform-state'
+backendAzureRmKey: 'ensuring-quality-releases.tfstate'

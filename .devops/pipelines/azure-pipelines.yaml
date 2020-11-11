@@ -232,7 +232,7 @@ stages:
     - task: Bash@3
       inputs:
         targetType: 'inline'
-        script: 'jmeter -n -t automatedtesting/jmeter/Starter.jmx -Jresdir=automatedtesting/jmeter/pages.csv -l automatedtesting/jmeter/report/results.jtl -e -o automatedtesting/jmeter/report'
+        script: 'jmeter -n -t automatedtesting/jmeter/JMeterPlan.jmx -Jresdir=automatedtesting/jmeter/pages.csv -l automatedtesting/jmeter/report/results.jtl -e -o automatedtesting/jmeter/report'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: 'automatedtesting/jmeter/report'

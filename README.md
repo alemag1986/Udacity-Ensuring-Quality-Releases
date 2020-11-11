@@ -4,6 +4,7 @@
 
 Udacity final project Ensuring Quality Releases.
 
+![pipeline](pipeline-diagrame.png)
 
 # Folders 
 

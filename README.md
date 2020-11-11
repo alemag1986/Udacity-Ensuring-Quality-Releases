@@ -4,6 +4,18 @@
 
 Udacity final project Ensuring Quality Releases.
 
+
+# Folders 
+
+- .devops/pipelines
+- automatedtesting
+  - jmeter
+  - postman
+  - selenium
+- fakerestapi
+- screenshoots
+- terraforms
+
 ---
 
 ## Environment Creation & Deployment

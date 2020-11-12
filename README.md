@@ -8,7 +8,7 @@ Udacity final project Ensuring Quality Releases.
 
 ![pipeline](pipeline-diagram.png)
 
-# Folders 
+# Project Structure 
 
 - .devops/pipelines
 - automatedtesting

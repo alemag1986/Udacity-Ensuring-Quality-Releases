@@ -4,7 +4,7 @@
 
 Udacity final project Ensuring Quality Releases.
 
-![pipeline](https://dev.azure.com/alemag1986/ensuring-quality-releases/_git/ensuring-quality-releases?path=%2Fpipeline-diagram.png&version=GBmaster)
+![pipeline](pipeline-diagram.png)
 
 # Folders 
 

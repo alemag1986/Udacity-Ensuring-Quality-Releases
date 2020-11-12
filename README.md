@@ -21,6 +21,8 @@ Udacity final project Ensuring Quality Releases.
 
 ---
 
+# Screenshoots Log
+
 ## Environment Creation & Deployment
 
 - Terraform to apply Infrastructure as Code (IaC)

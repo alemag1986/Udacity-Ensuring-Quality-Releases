@@ -1,5 +1,7 @@
 [![Build Status](https://dev.azure.com/alemag1986/ensuring-quality-releases/_apis/build/status/ensuring-quality-releases?branchName=master)](https://dev.azure.com/alemag1986/ensuring-quality-releases/_build/latest?definitionId=5&branchName=master)
 
+[[_TOC_]]
+
 # Overview
 
 Udacity final project Ensuring Quality Releases.

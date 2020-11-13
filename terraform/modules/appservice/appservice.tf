@@ -18,4 +18,10 @@ resource "azurerm_app_service" "test" {
   app_settings = {
     "WEBSITE_RUN_FROM_PACKAGE" = 0
   }
+
+  lifecycle {
+    ignore_changes = [
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
+    ]
+  }
 }

@@ -38,7 +38,8 @@ Udacity final project Ensuring Quality Releases.
 
 - Load test suite 
   - screenshot of the log output of JMeter when executed by the CI/CD pipeline
-    ![capture-3-load-test](screenshots/capture-3-load-test.png)
+    ![capture-3-load-test](screenshots/capture-3-load-test-part1.png)
+    ![capture-3-load-test](screenshots/capture-3-load-test-part2.png)
   
 - Functional test suites 
   - screenshot of the execution of the test suite by the CI/CD pipeline

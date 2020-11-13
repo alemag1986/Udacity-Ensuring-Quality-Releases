@@ -61,6 +61,8 @@ Udacity final project Ensuring Quality Releases.
   - screenshots of the graphs of the resource that the alert was triggered
     ![capture-6-webapp-part2](screenshots/capture-6-webapp-part2.png)
   - screenshots of the alert rule
+    ![capture-6-alerts-part3a](screenshots/capture-6-alerts-part3c.png)
+    ![capture-6-alerts-part3b](screenshots/capture-6-alerts-part3c.png)
     ![capture-6-alerts-part3c](screenshots/capture-6-alerts-part3c.png)
 
 - Azure Log Analytics

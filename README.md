@@ -12,7 +12,7 @@ Udacity final project Ensuring Quality Releases.
 
 - **.devops/pipelines**: azure pipelines yaml
 - **automatedtesting**: suites of different tests
-  - **jmeter**: load test (JMeterPlan.jmx), CSV inputs, and TestReports (jmeter-reports.zip)
+  - **jmeter**: load test (JMeterPlan.jmx), CSV inputs, and TestReports (endurance-report, stress-report)
   - **postman**: functional tests postman collections and environments
   - **selenium**: ui tests (uitests.py)
 - **fakerestapi**: api files to deplopy webapp

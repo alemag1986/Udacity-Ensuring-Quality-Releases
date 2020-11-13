@@ -242,11 +242,6 @@ stages:
         script: 'jmeter -n -t automatedtesting/jmeter/StressTestSuite.jmx -Jresdir=automatedtesting/jmeter/stresspages.csv -l automatedtesting/jmeter/report/stressresults.jtl -e -o automatedtesting/jmeter/stressreport'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: 'automatedtesting/jmeter/endurancereport'
-        ArtifactName: 'jmeter'
-        publishLocation: 'Container'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: 'automatedtesting/jmeter/stressreport'
+        PathtoPublish: 'automatedtesting/jmeter'
         ArtifactName: 'jmeter'
         publishLocation: 'Container'
